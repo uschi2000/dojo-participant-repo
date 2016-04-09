@@ -1,3 +1,4 @@
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
@@ -15,6 +16,12 @@ public class Lib {
     public static Iterable<Integer> toInt(Iterable<String> ints) {
         return Iterables.transform(ints, Integer::parseInt);
     }
+
+    public static String toString(Iterable<Integer> ints) {
+        Joiner joiner = Joiner.on(", ");
+        return joiner.join(ints);
+    }
+
 
     public static int multiply(Iterable<Integer> ints) {
         int m = 1;

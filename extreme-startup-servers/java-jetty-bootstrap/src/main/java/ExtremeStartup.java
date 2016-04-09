@@ -1,13 +1,14 @@
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ExtremeStartup extends HttpServlet {
 
@@ -62,6 +63,14 @@ public class ExtremeStartup extends HttpServlet {
         return Joiner.on(',').join(primes);
     }
 
+    private static final Pattern q6 = Pattern.compile(".*which of the following numbers is both a square and a cube: (.*)");
+    private String answerQ6(Matcher matcher) {
+        String list = matcher.group(1);
+        Iterable<Integer> nums = Lib.toInt(COMMA_SPLITTER.split(list));
+        Iterable<Integer> answers = Iterables.filter(nums, num -> Lib.isCube(num) && Lib.isSquare(num));
+        return Lib.toString(answers);
+    }
+
     String answer(String parameter) {
         try {
             if (parameter == null)
@@ -86,6 +95,10 @@ public class ExtremeStartup extends HttpServlet {
             Matcher q5Matcher = q5.matcher(parameter);
             if (q5Matcher.matches()) {
                 return answerQ5(q5Matcher);
+            }
+            Matcher q6Matcher = q6.matcher(parameter);
+            if (q6Matcher.matches()) {
+                return answerQ6(q6Matcher);
             }
 
 
