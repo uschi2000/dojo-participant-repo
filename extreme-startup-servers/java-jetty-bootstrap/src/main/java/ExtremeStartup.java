@@ -77,6 +77,12 @@ public class ExtremeStartup extends HttpServlet {
         return Integer.toString(Lib.fib(Integer.parseInt(i)));
     }
 
+    private static final Pattern q9 = Pattern.compile(".*what is (\\d+) minus (\\d+)");
+    private String answerQ9(Matcher q9Matcher) {
+        return String.valueOf(Integer.parseInt(q9Matcher.group(1))
+                - Integer.parseInt(q9Matcher.group(2)));
+    }
+
     String answer(String parameter) {
         try {
             if (parameter == null)
@@ -109,6 +115,10 @@ public class ExtremeStartup extends HttpServlet {
             Matcher q8Matcher = q8.matcher(parameter);
             if (q8Matcher.matches()) {
                 return answerQ8(q8Matcher);
+            }
+            Matcher q9Matcher = q9.matcher(parameter);
+            if (q9Matcher.matches()) {
+                return answerQ9(q9Matcher);
             }
 
 
