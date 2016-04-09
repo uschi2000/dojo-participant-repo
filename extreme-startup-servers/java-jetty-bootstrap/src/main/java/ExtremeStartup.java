@@ -121,6 +121,10 @@ public class ExtremeStartup extends HttpServlet {
                 return answerQ9(q9Matcher);
             }
 
+            BasicMatcher paris = new BasicMatcher("which city is the Eiffel tower in", "Paris");
+            if (paris.matches(parameter)) {
+                return paris.getResponse();
+            }
 
 
         } catch (Exception e) {
