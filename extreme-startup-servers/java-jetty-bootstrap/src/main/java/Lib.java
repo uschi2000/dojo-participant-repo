@@ -1,14 +1,15 @@
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
+import java.util.Collections;
+
 public class Lib {
+    public static int min(Iterable<Integer> ints) {
+        return Collections.min(ImmutableList.copyOf(ints));
+    }
+
     public static int max(Iterable<Integer> ints) {
-        int max = Integer.MIN_VALUE;
-        for (Integer i : ints) {
-            if (i >= max) {
-                max = i;
-            }
-        }
-        return max;
+        return Collections.max(ImmutableList.copyOf(ints));
     }
 
     public static Iterable<Integer> toInt(Iterable<String> ints) {
