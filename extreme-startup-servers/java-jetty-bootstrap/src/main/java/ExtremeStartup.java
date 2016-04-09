@@ -44,7 +44,7 @@ public class ExtremeStartup extends HttpServlet {
                 * Integer.parseInt(q1Matcher.group(2)));
     }
 
-    private static final Pattern q4 = Pattern.compile("who is the Prime Minister of Great Britain");
+    private static final Pattern q4 = Pattern.compile(".*who is the Prime Minister of Great Britain");
     private String answerQ4(Matcher q1Matcher) {
         return "David Cameron";
     }
