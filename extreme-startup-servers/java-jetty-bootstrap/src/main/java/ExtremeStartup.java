@@ -1,4 +1,6 @@
+import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,9 +35,13 @@ public class ExtremeStartup extends HttpServlet {
     Pattern q2Pattern = Pattern.compile(".*which of the following numbers is the largest: (.*)");
     String q2(Matcher q2Matcher) {
         String list = q2Matcher.group(1);
-        Iterable<Integer> nums = Lib.toInt(COMMA_SPLITTER.split(list));
+        Iterable<Integer> nums = splitOnComma(list);
         int max = Lib.max(nums);
         return Integer.toString(max);
+    }
+
+    private Iterable<Integer> splitOnComma(String list) {
+        return Lib.toInt(COMMA_SPLITTER.split(list));
     }
 
     private static final Pattern q3 = Pattern.compile(".*what is (\\d+) multiplied by (\\d+)");
@@ -47,6 +53,13 @@ public class ExtremeStartup extends HttpServlet {
     private static final Pattern q4 = Pattern.compile(".*who is the Prime Minister of Great Britain");
     private String answerQ4(Matcher q1Matcher) {
         return "David Cameron";
+    }
+
+    private static final Pattern q5 = Pattern.compile(".*which of the following numbers are primes: (.*)");
+    private String answerQ5(Matcher q5Matcher) {
+        Iterable<Integer> integers = splitOnComma(q5Matcher.group(1));
+        Iterable<Integer> primes = Iterables.filter(integers, Primes::isPrime);
+        return Joiner.on(',').join(primes);
     }
 
     String answer(String parameter) {
@@ -70,6 +83,11 @@ public class ExtremeStartup extends HttpServlet {
             if (q4Matcher.matches()) {
                 return answerQ4(q4Matcher);
             }
+            Matcher q5Matcher = q5.matcher(parameter);
+            if (q5Matcher.matches()) {
+                return answerQ5(q5Matcher);
+            }
+
 
 
         } catch (Exception e) {
