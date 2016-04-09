@@ -38,6 +38,12 @@ public class ExtremeStartup extends HttpServlet {
         return Integer.toString(max);
     }
 
+    private static final Pattern q3 = Pattern.compile(".*what is (\\d+) multiplied by (\\d+)");
+    private String answerQ3(Matcher q1Matcher) {
+        return String.valueOf(Integer.parseInt(q1Matcher.group(1))
+                * Integer.parseInt(q1Matcher.group(2)));
+    }
+
     String answer(String parameter) {
         try {
             if (parameter == null)
@@ -50,6 +56,10 @@ public class ExtremeStartup extends HttpServlet {
             Matcher q2Matcher = q2Pattern.matcher(parameter);
             if (q2Matcher.matches()) {
                 return q2(q2Matcher);
+            }
+            Matcher q3Matcher = q3.matcher(parameter);
+            if (q3Matcher.matches()) {
+                return answerQ3(q3Matcher);
             }
 
         } catch (Exception e) {
