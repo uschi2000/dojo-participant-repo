@@ -18,7 +18,7 @@ public class Lib {
     public static int multiply(Iterable<Integer> ints) {
         int m = 1;
         for (int i : ints) {
-            m *= 1;
+            m *= i;
         }
         return m;
     }
