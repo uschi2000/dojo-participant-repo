@@ -83,6 +83,13 @@ public class ExtremeStartup extends HttpServlet {
                 - Integer.parseInt(q9Matcher.group(2)));
     }
 
+    private static final Pattern q10 = Pattern.compile(".*what is (\\d+) plus (\\d+) plus (\\d+)");
+    private String answerQ10(Matcher matcher) {
+        return String.valueOf(Integer.parseInt(matcher.group(1))
+                + Integer.parseInt(matcher.group(2)))
+                + Integer.parseInt(matcher.group(3));
+    }
+
     String answer(String parameter) {
         try {
             if (parameter == null)
@@ -119,6 +126,10 @@ public class ExtremeStartup extends HttpServlet {
             Matcher q9Matcher = q9.matcher(parameter);
             if (q9Matcher.matches()) {
                 return answerQ9(q9Matcher);
+            }
+            Matcher q10Matcher = q10.matcher(parameter);
+            if (q10Matcher.matches()) {
+                return answerQ10(q10Matcher);
             }
 
             BasicMatcher paris = new BasicMatcher("which city is the Eiffel tower in", "Paris");
