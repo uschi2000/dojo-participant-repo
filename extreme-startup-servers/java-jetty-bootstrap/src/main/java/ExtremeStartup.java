@@ -92,9 +92,10 @@ public class ExtremeStartup extends HttpServlet {
 
     private static final Pattern q11 = Pattern.compile(".*what is (\\d+) multiplied by (\\d+) plus (\\d+)");
     private String answerQ11(Matcher matcher) {
-        return String.valueOf(Integer.parseInt(matcher.group(1))
-                * Integer.parseInt(matcher.group(2)))
-                + Integer.parseInt(matcher.group(3));
+        return String.valueOf(
+                  Integer.parseInt(matcher.group(1))
+                * Integer.parseInt(matcher.group(2))
+                + Integer.parseInt(matcher.group(3)));
     }
 
     String answer(String parameter) {
