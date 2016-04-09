@@ -31,25 +31,30 @@ public class ExtremeStartup extends HttpServlet {
     }
 
     Pattern q2Pattern = Pattern.compile(".*which of the following numbers is the largest: (.*)");
-    String q2(String query) {
-        Matcher m = q2Pattern.matcher(query);
-        String list = m.group(1);
+    String q2(Matcher q2Matcher) {
+        String list = q2Matcher.group(1);
         Iterable<Integer> nums = Lib.toInt(COMMA_SPLITTER.split(list));
         int max = Lib.max(nums);
         return Integer.toString(max);
     }
 
     String answer(String parameter) {
-        if (parameter == null)
-            return "team name";
+        try {
+            if (parameter == null)
+                return "team name";
 
-        Matcher q1Matcher = q1.matcher(parameter);
-        if (q1Matcher.matches()) {
-            return answerQ1(q1Matcher);
-        }
-        Matcher q2Matcher = q2Pattern.matcher(parameter);
-        if (q2Matcher.matches()) {
-            return q2(parameter);
+            Matcher q1Matcher = q1.matcher(parameter);
+            if (q1Matcher.matches()) {
+                return answerQ1(q1Matcher);
+            }
+            Matcher q2Matcher = q2Pattern.matcher(parameter);
+            if (q2Matcher.matches()) {
+                return q2(q2Matcher);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "team name";
         }
 
         return "team name";
