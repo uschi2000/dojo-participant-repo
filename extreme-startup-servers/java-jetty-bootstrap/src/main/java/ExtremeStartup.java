@@ -44,6 +44,11 @@ public class ExtremeStartup extends HttpServlet {
                 * Integer.parseInt(q1Matcher.group(2)));
     }
 
+    private static final Pattern q4 = Pattern.compile("who is the Prime Minister of Great Britain");
+    private String answerQ4(Matcher q1Matcher) {
+        return "David Cameron";
+    }
+
     String answer(String parameter) {
         try {
             if (parameter == null)
@@ -61,6 +66,11 @@ public class ExtremeStartup extends HttpServlet {
             if (q3Matcher.matches()) {
                 return answerQ3(q3Matcher);
             }
+            Matcher q4Matcher = q4.matcher(parameter);
+            if (q4Matcher.matches()) {
+                return answerQ4(q4Matcher);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
