@@ -98,6 +98,14 @@ public class ExtremeStartup extends HttpServlet {
                 + Integer.parseInt(matcher.group(3)));
     }
 
+    private static final Pattern q12 = Pattern.compile(".*what is (\\d+) to the power of (\\d+)");
+    private String answerQ12(Matcher matcher) {
+        return String.valueOf(
+                Math.pow(
+                Integer.parseInt(matcher.group(1)),
+                        Integer.parseInt(matcher.group(2))));
+    }
+
     String answer(String parameter) {
         try {
             if (parameter == null)
@@ -142,6 +150,10 @@ public class ExtremeStartup extends HttpServlet {
             Matcher q11Matcher = q11.matcher(parameter);
             if (q11Matcher.matches()) {
                 return answerQ11(q11Matcher);
+            }
+            Matcher q12Matcher = q12.matcher(parameter);
+            if (q12Matcher.matches()) {
+                return answerQ12(q12Matcher);
             }
 
             BasicMatcher paris = new BasicMatcher("which city is the Eiffel tower in", "Paris");
