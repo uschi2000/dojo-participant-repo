@@ -71,6 +71,12 @@ public class ExtremeStartup extends HttpServlet {
         return Lib.toString(answers);
     }
 
+    private static final Pattern q8 = Pattern.compile(".*: what is the (\\d+).?.?.? number in the Fibonacci sequence(.*)");
+    private String answerQ8(Matcher matcher) {
+        String i = matcher.group(1);
+        return Integer.toString(Lib.fib(Integer.parseInt(i)));
+    }
+
     String answer(String parameter) {
         try {
             if (parameter == null)
@@ -99,6 +105,10 @@ public class ExtremeStartup extends HttpServlet {
             Matcher q6Matcher = q6.matcher(parameter);
             if (q6Matcher.matches()) {
                 return answerQ6(q6Matcher);
+            }
+            Matcher q8Matcher = q8.matcher(parameter);
+            if (q8Matcher.matches()) {
+                return answerQ8(q8Matcher);
             }
 
 
